@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Special Someone ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Padauk', sans-serif; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffe6f0 0%, #ffd1e3 50%, #f8bbd0 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* နောက်ခံ အသည်းပုံလေးများ */
+    .bg-heart {
+      position: absolute;
+      color: rgba(255, 77, 136, 0.25);
+      font-size: 24px;
+      animation: floatUp 6s infinite linear;
+      user-select: none;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
+      padding: 30px 24px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(233, 30, 99, 0.15);
+      z-index: 10;
+      transition: all 0.3s ease;
+    }
+
+    .main-img {
+      width: 210px;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 0 auto 18px;
+      display: block;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+    }
+
+    h2 {
+      color: #d81b60;
+      font-size: 21px;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    p.sub {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.25s ease;
+    }
+
+    #yesBtn {
+      background: linear-gradient(45deg, #ff4081, #f50057);
+      color: white;
+      font-size: 18px;
+      padding: 12px 28px;
+      box-shadow: 0 6px 18px rgba(245, 0, 87, 0.35);
+    }
+
+    #noBtn {
+      background: #f1f1f1;
+      color: #555;
+      font-size: 16px;
+      padding: 12px 24px;
+    }
+
+    .letter-btn {
+      background: linear-gradient(45deg, #ff5277, #ff1744);
+      color: white;
+      padding: 13px 26px;
+      font-size: 16px;
+      margin-top: 10px;
+      box-shadow: 0 6px 18px rgba(255, 23, 68, 0.3);
+    }
+
+    /* Love Letter စာအိတ်ပုံစံ */
+    .letter-box {
+      display: none;
+      text-align: left;
+      background: #fff9fb;
+      border: 2px dashed #ff80ab;
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 10px;
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .letter-tag {
+      display: inline-block;
+      background: #ffe4ec;
+      color: #d81b60;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .letter-text {
+      color: #444;
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 14px;
+      white-space: pre-line;
+    }
+
+    .couple-photo {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 14px;
+    }
+
+    .signature {
+      text-align: right;
+      color: #d81b60;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .close-btn {
+      width: 100%;
+      background: #d81b60;
+      color: white;
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- အဆင့် ၁: မေးခွန်းမေးမည့်အပိုင်း -->
+  <div class="card" id="questionCard">
+    <img id="displayImg" class="main-img" src="pic1.jpg" alt="https://ibb.co/Fkcyb8r0">
+    <h2 id="questionText">ပြန်ချစ်ကြရအောင်လေ နော် ❤️</h2>
+    <p class="sub" id="subText">အမှန်အတိုင်းလေး ရွေးပေးနော် 🥺</p>
+    <div class="btn-group">
+      <button id="yesBtn" onclick="handleYes()">Yes 💞</button>
+      <button id="noBtn" onclick="handleNo()">No 😢</button>
+    </div>
+  </div>
+
+  <!-- အဆင့် ၂: Yes နှိပ်ပြီးနောက် ပေါ်လာမည့်အပိုင်း -->
+  <div class="card" id="successCard" style="display: none;">
+    <img class="main-img" src="yes_pic.jpg" alt="<img id="displayImg" class="main-img" src="https://i.ibb.co/xxxxxxx/image.jpg" alt="Cute Photo">
+">
+    <h2>Yayyy! ချစ်သူတွေ ပြန်ဖြစ်သွားပြီနော်! 🥰💖</h2>
+    <p class="sub">ဒီအောက်က စာအိတ်လေးကို ဖွင့်ကြည့်ပါဦး</p>
+    <button class="letter-btn" onclick="openLetter()">💌 Love Letter for you</button>
+
+    <!-- Love Letter စာကိုယ် -->
+    <div class="letter-box" id="letterBox">
+      <span class="letter-tag">💌 LOVE LETTER</span>
+      <h3 style="color:#d81b60; margin-bottom:8px;">To my special someone,</h3>
+      <p class="letter-text">
+အရင်က စိတ်ကောက်ခဲ့တာတွေ၊ နားလည်မှုလွဲခဲ့တာတွေ အားလုံးအတွက် တောင်းပန်ပါတယ်နော်။ 
+နောက်ဆိုရင် အရင်ကထက် ပိုဂရုစိုက်ပြီး အမြဲတမ်း အနားမှာ ရှိနေပေးပါ့မယ်။ အရမ်းချစ်တယ် ❤️
+      </p>
+      <!-- နှစ်ယောက်တွဲပုံ ထည့်ရန်နေရာ -->
+      <img class="couple-photo" src="couple.jpg" alt=>
+      <div class="signature">Forever Yours 💕</div>
+      <button class="close-btn" onclick="alert('အရမ်းချစ်တယ်နော် ❤️🥰')">တစ်သက်လုံး ချစ်သွားပါ့မယ် 💗</button>
+    </div>
+  </div>
+
+  <script>
+    // နောက်ခံ အသည်းပုံလေးများ ဖန်တီးခြင်း
+    for (let i = 0; i < 15; i++) {
+      let heart = document.createElement("div");
+      heart.className = "bg-heart";
+      heart.innerText = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDelay = Math.random() * 5 + "s";
+      document.body.appendChild(heart);
+    }
+
+    // "No" နှိပ်တိုင်း ပြောင်းမည့် ပုံနှင့် စာသားများ
+    const noStages = [
+      { img: "pic2.jpg", text: "စဉ်းစားပါဦး နော်နော်... 🥺" },
+      { img: "pic3.jpg", text: "Yes ပဲ နှိပ်လိုက်ပါတော့ 😘❤️" },
+      { img: "pic4.jpg", text: "Pleaseeee 🥺🙏" },
+      { img: "pic5.jpg", text: "တကယ်ကြီး မချစ်ဘူးလား 😢" },
+      { img: "pic6.jpg", text: "No နှိပ်လို့ မရတော့ဘူးနော် 😝" }
+    ];
+
+    let noCount = 0;
+    let yesFontSize = 18;
+    let yesPadY = 12;
+    let yesPadX = 28;
+
+    function handleNo() {
+      const displayImg = document.getElementById("displayImg");
+      const questionText = document.getElementById("questionText");
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
+
+      if (noCount < noStages.length) {
+        displayImg.src = noStages[noCount].img;
+        questionText.innerText = noStages[noCount].text;
+        noCount++;
+      }
+
+      // Yes ခလုတ်ကို တဖြည်းဖြည်း ကြီးလာစေခြင်း
+      yesFontSize += 8;
+      yesPadY += 6;
+      yesPadX += 12;
+      yesBtn.style.fontSize = yesFontSize + "px";
+      yesBtn.style.padding = `${yesPadY}px ${yesPadX}px`;
+
+      // ၅ ကြိမ်မြောက်ဆိုရင် No ခလုတ်ကို ဖျောက်လိုက်မယ်
+      if (noCount >= noStages.length) {
+        noBtn.style.display = "none";
+      }
+    }
+
+    function handleYes() {
+      document.getElementById("questionCard").style.display = "none";
+      document.getElementById("successCard").style.display = "block";
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+    }
+
+    function openLetter() {
+      document.getElementById("letterBox").style.display = "block";
+      confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
+    }
+  </script>
+</body>
+</html>
